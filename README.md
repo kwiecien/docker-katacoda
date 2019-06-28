@@ -38,3 +38,22 @@ docker run -d --name redisMappedPwd -v "$PWD/data":/data redis
 docker run ubuntu ps
 docker run -it ubuntu bash
 ```
+
+## Deploy Static HTML Website as Container
+#### Step 1 - Create Dockerfile
+```
+FROM nginx:alpine
+COPY . /usr/share/nginx/html
+```
+
+#### Step 2 - Build Docker Image
+```
+docker build -t webserver-image:v1 .
+docker images
+```
+
+#### Step 3 - Run
+```
+docker run -d -p 80:80 webserver-image:v1
+curl docker
+```
