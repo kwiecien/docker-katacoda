@@ -57,3 +57,37 @@ docker images
 docker run -d -p 80:80 webserver-image:v1
 curl docker
 ```
+
+## Building Container Images
+#### Step 1 - Base Images
+```
+FROM nginx:1.11-alpine
+```
+
+#### Step 2 - Running Commands
+```
+COPY index.html /usr/share/nginx/html/index.html
+```
+
+#### Step 3 - Exposing Ports
+```
+EXPOSE 80
+```
+
+#### Step 4 - Default Commands
+```
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+#### Step 5 - Building Containers
+```
+docker build -t my-nginx-image:latest .
+docker images
+```
+
+#### Step 6 - Launching New Image
+```
+docker run -d -p 80:80 my-nginx-image:latest
+curl -i http://docker
+docker ps
+```
