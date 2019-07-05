@@ -91,3 +91,36 @@ docker run -d -p 80:80 my-nginx-image:latest
 curl -i http://docker
 docker ps
 ```
+
+## Dockerizing Node.js applications
+#### Step 1 - Base Image
+```
+FROM node:10-alpine
+RUN mkdir -p /src/app
+WORKDIR /src/app
+```
+
+#### Step 2 - NPM Install
+```
+COPY package.json /src/app/package.json
+RUN npm install
+```
+
+#### Step 3 - Configuring Application
+```
+COPY . /src/app
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+#### Step 4 - Building & Launching Container
+```
+docker build -t my-nodejs-app .
+docker run -d --name my-running-app -p 3000:3000 my-nodejs-app
+curl http://docker:3000
+```
+
+#### Step 5 - Environment Variables
+```
+docker run -d --name my-production-running-app -e NODE_ENV=production -p 3000:3000 my-nodejs-app
+```
